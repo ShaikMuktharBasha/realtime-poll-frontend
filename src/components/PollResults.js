@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { HiChartBar } from 'react-icons/hi';
-import { MdHowToVote } from 'react-icons/md';
 
 const PollResults = React.memo(({ poll, hasVoted, onVote, voting, selectedOption }) => {
   const percentages = useMemo(() => {
@@ -8,7 +7,7 @@ const PollResults = React.memo(({ poll, hasVoted, onVote, voting, selectedOption
     return poll.options.map(option => 
       ((option.votes / poll.totalVotes) * 100).toFixed(1)
     );
-  }, [poll?.options, poll?.totalVotes]);
+  }, [poll]);
 
   const getPercentage = (index) => percentages[index] || 0;
 
