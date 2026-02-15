@@ -555,17 +555,30 @@ textarea {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .container {
-    padding: 30px 25px;
+    padding: 25px 20px;
+    margin: 15px;
+    max-width: 95%;
   }
 
   h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
+    margin-bottom: 15px;
   }
 
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  .poll-question {
+    font-size: 1.3rem;
+    padding: 20px;
+    margin-bottom: 20px;
   }
 
   .option-input-group {
@@ -574,11 +587,94 @@ textarea {
 
   .link-display {
     flex-direction: column;
+    gap: 10px;
+  }
+
+  .copy-btn,
+  .share-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .back-btn {
+    padding: 14px 24px;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .option-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .option-text {
+    font-size: 1rem;
+  }
+
+  .option-votes {
+    font-size: 1.3rem;
+  }
+
+  .alert {
+    padding: 14px;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .live-indicator {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .total-votes {
+    padding: 18px;
+    font-size: 1.1rem;
   }
 
   .App::before,
   .App::after {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px 15px;
+    margin: 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .poll-question {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .back-btn {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+
+  .option-card {
+    padding: 14px;
+  }
+
+  .option-text {
+    font-size: 0.95rem;
+  }
+
+  .option-votes {
+    font-size: 1.1rem;
   }
 }
 

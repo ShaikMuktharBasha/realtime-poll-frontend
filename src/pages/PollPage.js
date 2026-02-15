@@ -4,7 +4,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import config from '../config';
 import PollResults from '../components/PollResults';
-import { FaArrowLeft, FaCheckCircle, FaHandPointer, FaExclamationCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaCheckCircle, FaArrowDown, FaExclamationCircle } from 'react-icons/fa';
 import { MdLiveTv } from 'react-icons/md';
 import { IoMdCreate } from 'react-icons/io';
 
@@ -163,7 +163,7 @@ function PollPage() {
         </div>
       ) : (
         <div className="alert alert-success">
-          <FaHandPointer style={{ marginRight: '8px', verticalAlign: 'middle' }} /> Click an option below to vote
+          <FaArrowDown style={{ marginRight: '8px', verticalAlign: 'middle' }} /> Click an option below to vote
         </div>
       )}
 
