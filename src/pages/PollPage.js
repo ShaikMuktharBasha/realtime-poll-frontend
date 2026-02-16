@@ -106,8 +106,11 @@ function PollPage() {
       });
 
       if (response.data.success) {
-        // Optimistic UI update - update immediately
-        setPoll(response.data.poll);
+        // Optimistic UI update - merge new data with existing poll to preserve all fields
+        setPoll(prevPoll => ({
+          ...prevPoll,
+          ...response.data.poll
+        }));
         setHasVoted(true);
         
         // Save vote in localStorage to persist across sessions (share link will remain visible)
