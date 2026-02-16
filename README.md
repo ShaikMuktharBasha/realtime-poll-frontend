@@ -4,8 +4,7 @@ A full-stack real-time polling web application where users can create polls, sha
 
 ## 🎯 Live Demo
 
-**Frontend:** [Coming after deployment]  
-**Backend:** [Coming after deployment]
+**Project URL:** [https://realtime-poll-muktharshaik.vercel.app/]  
 
 ## ✨ Features
 
@@ -149,7 +148,7 @@ npm install
 Create `.env` file (already created with MongoDB connection):
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://muktharbasha:shaikmuktharbasha@cluster0.t1lt2x8.mongodb.net/applyo
+MONGODB_URI=mongodb+srv://
 NODE_ENV=development
 ```
 
@@ -402,11 +401,11 @@ This project demonstrates:
 
 MIT License - Feel free to use this project for learning purposes.
 
-## 👨‍💻 Author
+## Author
 
 Built as a real-time polling assignment to demonstrate full-stack development skills.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Socket.io for real-time communication
 - MongoDB Atlas for database hosting
