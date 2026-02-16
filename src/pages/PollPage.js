@@ -23,6 +23,7 @@ function PollPage() {
   const [voting, setVoting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [voteError, setVoteError] = useState('');
   const socketRef = useRef(null);
   const lastUpdateRef = useRef(Date.now());
 
@@ -99,6 +100,7 @@ function PollPage() {
 
     setVoting(true);
     setSelectedOption(optionIndex);
+    setVoteError(''); // Clear any previous errors
 
     try {
       const response = await axios.post(`${config.API_URL}/api/polls/${pollId}/vote`, {
@@ -118,8 +120,12 @@ function PollPage() {
         localStorage.setItem(localVoteKey, 'true');
       }
     } catch (err) {
-      alert(err.response?.data?.error || 'Failed to record vote');
+      const errorMessage = err.response?.data?.error || 'Failed to record vote';
+      setVoteError(errorMessage);
       setSelectedOption(null);
+      
+      // Clear error after 5 seconds
+      setTimeout(() => setVoteError(''), 5000);
     } finally {
       setVoting(false);
     }
@@ -176,6 +182,12 @@ function PollPage() {
       ) : (
         <div className="alert alert-success">
           <FaArrowDown style={{ marginRight: '8px', verticalAlign: 'middle' }} /> Click an option below to vote
+        </div>
+      )}
+
+      {voteError && (
+        <div className="alert alert-error">
+          <FaExclamationCircle style={{ marginRight: '8px', verticalAlign: 'middle' }} /> {voteError}
         </div>
       )}
 
