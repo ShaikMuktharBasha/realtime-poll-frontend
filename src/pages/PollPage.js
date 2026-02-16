@@ -4,7 +4,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import config from '../config';
 import PollResults from '../components/PollResults';
-import { FaArrowLeft, FaCheckCircle, FaArrowDown, FaExclamationCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaCheckCircle, FaArrowDown, FaExclamationCircle, FaShare, FaCopy } from 'react-icons/fa';
 import { MdLiveTv } from 'react-icons/md';
 import { IoMdCreate } from 'react-icons/io';
 
@@ -14,10 +14,15 @@ function PollPage() {
   const [poll, setPoll] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [hasVoted, setHasVoted] = useState(false);
+  // Initialize hasVoted from localStorage to persist across sessions
+  const [hasVoted, setHasVoted] = useState(() => {
+    const localVoteKey = `poll_voted_${pollId}`;
+    return localStorage.getItem(localVoteKey) === 'true';
+  });
   const [selectedOption, setSelectedOption] = useState(null);
   const [voting, setVoting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const [copied, setCopied] = useState(false);
   const socketRef = useRef(null);
   const lastUpdateRef = useRef(Date.now());
 
@@ -38,13 +43,6 @@ function PollPage() {
   }, [pollId]);
 
   useEffect(() => {
-    // ANTI-CHEATING PROTECTION #2: Check localStorage
-    const localVoteKey = `poll_voted_${pollId}`;
-    const hasVotedLocally = localStorage.getItem(localVoteKey) === 'true';
-    if (hasVotedLocally) {
-      setHasVoted(true);
-    }
-
     // Fetch poll data
     fetchPoll();
 
@@ -112,7 +110,7 @@ function PollPage() {
         setPoll(response.data.poll);
         setHasVoted(true);
         
-        // ANTI-CHEATING PROTECTION #2: Save vote in localStorage
+        // Save vote in localStorage to persist across sessions (share link will remain visible)
         const localVoteKey = `poll_voted_${pollId}`;
         localStorage.setItem(localVoteKey, 'true');
       }
@@ -123,6 +121,17 @@ function PollPage() {
       setVoting(false);
     }
   }, [hasVoted, voting, pollId]);
+
+  const copyToClipboard = useCallback(() => {
+    const pollUrl = window.location.href;
+    navigator.clipboard.writeText(pollUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+      alert('Failed to copy link');
+    });
+  }, []);
 
   if (loading) {
     return (
@@ -164,6 +173,30 @@ function PollPage() {
       ) : (
         <div className="alert alert-success">
           <FaArrowDown style={{ marginRight: '8px', verticalAlign: 'middle' }} /> Click an option below to vote
+        </div>
+      )}
+
+      {hasVoted && (
+        <div className="share-section">
+          <div className="share-header">
+            <FaShare style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+            Share this poll with others
+          </div>
+          <div className="share-link-container">
+            <input 
+              type="text" 
+              value={window.location.href} 
+              readOnly 
+              className="share-link-input"
+            />
+            <button 
+              className="btn btn-copy" 
+              onClick={copyToClipboard}
+            >
+              <FaCopy style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
         </div>
       )}
 
